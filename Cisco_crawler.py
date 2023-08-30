@@ -1,10 +1,9 @@
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.common.keys import Keys
-import time
-
+# import time
 
 # 쿼리문 https://talosintelligence.com/reputation_center/lookup?search=4.2.2.1
 
@@ -21,8 +20,6 @@ except:
 
 while True:
     pass
-
-        
 
 
 

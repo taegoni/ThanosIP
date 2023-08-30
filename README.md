@@ -1,4 +1,4 @@
 # FeedSite-Crawler
 
-- traige, symantec, brightcloud, AILABS ~~JoeSandbox(x)~~
+- AILABS, Brightcloud, ~~JoeSandbox(x)~~, Symantec, Traige
 

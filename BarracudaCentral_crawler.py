@@ -2,8 +2,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.keys import Keys
-# import time
+import time
 try:
     ip="121.53.105.193"
     url = f"https://www.barracudacentral.org/lookups/lookup-reputation"
@@ -11,11 +10,21 @@ try:
     chrome_options.add_experimental_option("detach", True) 
     driver = webdriver.Chrome(options=chrome_options)
     driver.get(url)
-    driver.find_element(by='ir_entry').send_keys(ip)
-    driver.find_element(by='lookup-reputation').click()   
-        
+    driver.find_element(By.CSS_SELECTOR,"#ir_entry").send_keys(ip)
+    driver.find_element(By.CSS_SELECTOR,'#lookup-reputation > div > div.yui-u.first > form > fieldset > div:nth-child(3) > input[type=submit]:nth-child(2)').click()   
+    time.sleep(1)
+    
+    # print(1)
+    # driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p")
+    # print(2)
+    # print(driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p"))
+    # print(3)
+    # driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p").text
+    # print(4)
+    print(driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p").text)
+
 except:
-    print("nope")
+    print("err0r err0r err0r err0r err0r err0r err0r")
 while True:
     pass
 

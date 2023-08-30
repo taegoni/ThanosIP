@@ -33,11 +33,11 @@ class TestTry1():
     chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
 
     try:
-        driver = webdriver.Chrome(f'./chromedriver.exe', options=option)
+        driver = webdriver.Chrome(f'../chromedriver.exe', options=option)
         print("try2")
     except:
         chromedriver_autoinstaller.install(True)
-        driver = webdriver.Chrome(f'./chromedriver.exe', options=option)
+        driver = webdriver.Chrome(f'../chromedriver.exe', options=option)
         driver.implicitly_wait(10) 
 
     driver = webdriver.Chrome()

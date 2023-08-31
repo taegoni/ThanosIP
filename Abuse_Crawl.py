@@ -1,3 +1,6 @@
+# Abuse_Crawl.py
+# API 결과값 받아오기 성공
+
 import requests
 import json
 from variableFile import AbuseAPI

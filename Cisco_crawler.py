@@ -1,11 +1,7 @@
 from selenium import webdriver
-# from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.common.keys import Keys
-# import time
 
-# 쿼리문 https://talosintelligence.com/reputation_center/lookup?search=4.2.2.1
+# subprocess.Popen(r'C:/Program Files/Google/Chrome/Application/chrome.exe --remote-debugging-port=9222 --user-data-dir="./chrometemp"')
 
 try:
     ip="121.53.105.193"
@@ -20,6 +16,3 @@ except:
 
 while True:
     pass
-
-
-

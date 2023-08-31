@@ -1,6 +1,5 @@
 import requests
 import json
-import sys, os
 from variableFile import AbuseAPI
 
 

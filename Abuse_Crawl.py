@@ -10,7 +10,7 @@ from variableFile import AbuseAPI
 url = 'https://api.abuseipdb.com/api/v2/check'
 
 querystring = {
-    'ipAddress': '118.25.6.39',
+    'ipAddress': '211.44.166.52',
     'maxAgeInDays': '90'
 }
 

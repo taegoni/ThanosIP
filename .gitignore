@@ -1,7 +1,7 @@
 # git ignore list
 
-variable.txt
-variable.py
+variableFile.txt
+variableFile.py
 
 package/
 

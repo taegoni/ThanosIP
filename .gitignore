@@ -1,5 +1,9 @@
 # git ignore list
 
+# git rm -r --cached .
+# git add .
+# git commit -m "removed cached"
+
 variableFile.txt
 variableFile.py
 

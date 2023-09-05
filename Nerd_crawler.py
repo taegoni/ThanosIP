@@ -9,7 +9,8 @@ with open(file_path,'r',encoding='utf-8') as file:
 
 ip_list_path="laBel_sample0001.txt"
 # ip_list_path="banlist.txt"
-# ip="222.99.77.39"
+
+# 옵션에 따라 full rep fmt 등등으로 나눠볼 예정.            
 option=["full","rep","fmt"]
 clean_list=[]
 retry_list=[]
@@ -19,19 +20,10 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
                 if line[0]=="#":
                         continue
                 else:   
-                        # 옵션에 따라 full rep fmt 등등으로 나눠볼 예정.            
                         ip = line.strip()
                         query=f'{url}/ip/{ip}/{option[0]}'
                         res_raw = requests.get(query,headers={"Authorization":f'token {private_key}'})
                         res_json = json.loads(res_raw.text)
-                        # server error
-                                # 방법 1. 바로 재시도
-                                # 1. 서버 에러이므로 5초 후 재시도, 3회 재시도 후 안되면 종료, 재시도 시 로그 남기기.
-                                # 2. 저장이 필요한 데이터 : err_n, error, ip. => 로그에 저장
-                                
-                                # ! 방법 2. 모아서 나중에 재시도 (특정 사이트에 적용)
-                                # 1. 에러 발생시 ip만 그냥 모아둠.
-                                # 2. 끝까지 진행후 다시 재시도(sleep 1)
                         if res_json.get("err_n"):
                                 if res_json["err_n"]>=500:
                                         retry_list.append(ip)
@@ -40,7 +32,7 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
                         else:
                                 new.write(res_raw.text+"\n")
         pending=[]
-        for ret in tqdm(range(len(retry_list))):
+        for ret in tqdm(range(len(retry_list)),desc="재시도 1차"):
                 ip=retry_list[ret]
                 res_raw = requests.get(query,headers={"Authorization":f'token {private_key}'})
                 res_json = json.loads(res_raw.text)

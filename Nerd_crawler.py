@@ -14,7 +14,7 @@ ip_list_path="laBel_sample0001.txt"
 option=["full","rep","fmt"]
 clean_list=[]
 retry_list=[]
-new = open(f'NERD_result_{ip_list_path[:-4]}.txt','w')
+new = open(f'NERD_result_{ip_list_path}','w')
 with open(ip_list_path,'r',encoding='utf-8') as ips:
         for line in tqdm(ips.readlines(),desc='1차 크롤링'):
                 if line[0]=="#":

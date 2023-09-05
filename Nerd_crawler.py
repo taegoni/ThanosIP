@@ -13,12 +13,13 @@ with open(file_path,'r',encoding='utf-8') as file:
         data =json.load(file)
         url,private_key = data["Nerd"].values()
 
-ip_list_path="./banlist.txt"
+ip_list_path="laBel_sample0001.txt"
+# ip_list_path="banlist.txt"
 # ip="222.99.77.39"
 option=["full","rep","fmt"]
 clean_list=[]
 retry_list=[]
-new = open('NERD_result2.txt','w')
+new = open(f'NERD_result_{ip_list_path[:-4]}.txt','w')
 with open(ip_list_path,'r',encoding='utf-8') as ips:
         for line in ips.readlines():
                 if line[0]=="#":
@@ -37,7 +38,6 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
                                 # ! 방법 2. 모아서 나중에 재시도 (특정 사이트에 적용)
                                 # 1. 에러 발생시 ip만 그냥 모아둠.
                                 # 2. 끝까지 진행후 다시 재시도(sleep 1)
-
                         if res_json.get("err_n"):
                                 if res_json["err_n"]>=500:
                                         retry_list.append(ip)
@@ -45,20 +45,20 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
                                         clean_list.append(ip)
                         else:
                                 new.write(res_raw.text+"\n")
-        last=[]
+        pending=[]
         for ret in range(len(retry_list)):
                 ip=retry_list[ret]
                 res_raw = requests.get(query,headers={"Authorization":f'token {private_key}'})
                 res_json = json.loads(res_raw.text)
                 if res_json.get("err_n")>=500:
-                        last.append(ip)
+                        pending.append(ip)
                 elif res_json.get("err_n")>=400:
                         clean_list.append(ip)
                 else:
                         new.write(res_raw.text+"\n")
         
-        if last:
-                new.write(f'"client error":{last}')
+        new.write(f'"clean_list":{clean_list}'+"\n")
+        new.write(f"http 500+ : {pending}"+"\n")
 
 
 new.close()

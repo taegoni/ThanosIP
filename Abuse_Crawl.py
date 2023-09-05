@@ -45,8 +45,13 @@ while i < len(only_ip) :
     # Formatted output
     decodedResponse = json.loads(response.text)
 
-    # output 파일에 쓰기
+    # if문으로 정상 결과값이면 output 파일에 쓰기
     ip_output.write(json.dumps(decodedResponse, sort_keys=True, indent=4))
+
+    # elif문으로 error 결과값이면,
+    # 서버 오류 (500번대)라면 error_ip txt 파일에 쓰기
+    # 그 외 오류라면 ip 검색 재시도
+        # 몇 번 시도해도 안되면 error_ip txt 파일에 쓰기
 
     i += 1
 

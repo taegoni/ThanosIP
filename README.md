@@ -1,4 +1,4 @@
 # FeedSite-Crawler
 
-- AILABS, Brightcloud, ~~JoeSandbox(x)~~, Symantec, Traige
+- AILABS, AbuseIPDB ~~Brightcloud~~, ~~JoeSandbox(x)~~, ~~Symantec~~, ~~Traige~~
 

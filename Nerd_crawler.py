@@ -1,12 +1,6 @@
-
-# ! 우선 사항 -> 메뉴 형식으로 기능을 정의하여 다양한 API를 사용할 수 있도록 하기.
-# ! 개발 레벨 정하기? 1단계 기능 완성 2단계 모듈화 3단계 코드 효율성 증대.
-# ! TODO: 에러시 ip들만 따로 모아 저장. 마지막이나 맨앞에 기록하도록 하기.
-# 진행도 표기하기..
-# ? DB에서 이미 존재하는지 확인하는 기능은 어떻게 구현할 것인지.. 순서의 문제..
-
 import json
 import requests
+from tqdm import tqdm
 
 file_path="./teniron.json"
 with open(file_path,'r',encoding='utf-8') as file:
@@ -21,7 +15,7 @@ clean_list=[]
 retry_list=[]
 new = open(f'NERD_result_{ip_list_path[:-4]}.txt','w')
 with open(ip_list_path,'r',encoding='utf-8') as ips:
-        for line in ips.readlines():
+        for line in tqdm(ips.readlines(),desc='1차 크롤링'):
                 if line[0]=="#":
                         continue
                 else:   
@@ -46,7 +40,7 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
                         else:
                                 new.write(res_raw.text+"\n")
         pending=[]
-        for ret in range(len(retry_list)):
+        for ret in tqdm(range(len(retry_list))):
                 ip=retry_list[ret]
                 res_raw = requests.get(query,headers={"Authorization":f'token {private_key}'})
                 res_json = json.loads(res_raw.text)
@@ -62,5 +56,3 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
 
 
 new.close()
-        
-

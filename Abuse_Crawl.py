@@ -5,22 +5,49 @@ import requests
 import json
 from variableFile import AbuseAPI
 
+# ip list 파일 열고 output 저장할 변수 선언
+ip_file = open("laBel_sample0001.txt", 'r')
+ip_output = open("ip_output.txt", 'a')
 
-# Defining the api-endpoint
-url = 'https://api.abuseipdb.com/api/v2/check'
+# 16째 줄부터 (ip 부분만) 읽기
+ip_line = ip_file.readlines()[15:]
 
-querystring = {
-    'ipAddress': '211.44.166.52',
-    'maxAgeInDays': '90'
-}
+# ip 뒤에 줄바꿈 문자 제거
+i = 0
+only_ip = []
+while i < len(ip_line) :
+    only_ip.append(ip_line[i].rstrip("\n"))
+    i += 1
 
-headers = {
-    'Accept': 'application/json',
-    'Key': AbuseAPI
-}
+print(only_ip)
 
-response = requests.request(method='GET', url=url, headers=headers, params=querystring)
+# for문으로 ip 한줄씩 반복 검색하기
+i = 0
+while i < len(only_ip) :
 
-# Formatted output
-decodedResponse = json.loads(response.text)
-print(json.dumps(decodedResponse, sort_keys=True, indent=4))
+    # Defining the api-endpoint
+    url = 'https://api.abuseipdb.com/api/v2/check'
+
+    querystring = {
+        
+        'ipAddress': only_ip[i],
+        'maxAgeInDays': '90'
+    }
+
+    headers = {
+        'Accept': 'application/json',
+        'Key': AbuseAPI
+    }
+
+    response = requests.request(method='GET', url=url, headers=headers, params=querystring)
+
+    # Formatted output
+    decodedResponse = json.loads(response.text)
+    # print(json.dumps(decodedResponse, sort_keys=True, indent=4))
+    ip_output.write(json.dumps(decodedResponse, sort_keys=True, indent=4)) # output 파일에 쓰기
+
+    i += 1
+
+# ip list 파일 닫기
+ip_file.close()
+ip_output.close()

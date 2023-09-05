@@ -12,16 +12,17 @@ ip_output = open("ip_output.txt", 'a')
 # 16째 줄부터 (ip 부분만) 읽기
 ip_line = ip_file.readlines()[15:]
 
-# ip 뒤에 줄바꿈 문자 제거
+# while문으로 한줄씩 ip 뒤에 줄바꿈 문자 제거
 i = 0
 only_ip = []
 while i < len(ip_line) :
     only_ip.append(ip_line[i].rstrip("\n"))
     i += 1
 
+# 정제된 ip 리스트 확인 출력
 print(only_ip)
 
-# for문으로 ip 한줄씩 반복 검색하기
+# while문으로 ip 한줄씩 반복 검색하기
 i = 0
 while i < len(only_ip) :
 
@@ -43,8 +44,9 @@ while i < len(only_ip) :
 
     # Formatted output
     decodedResponse = json.loads(response.text)
-    # print(json.dumps(decodedResponse, sort_keys=True, indent=4))
-    ip_output.write(json.dumps(decodedResponse, sort_keys=True, indent=4)) # output 파일에 쓰기
+
+    # output 파일에 쓰기
+    ip_output.write(json.dumps(decodedResponse, sort_keys=True, indent=4))
 
     i += 1
 

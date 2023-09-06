@@ -10,6 +10,6 @@ variableFile.py
 package/
 
 *.ipynb
-
-
 *try.py
+
+# 임시 숨김 파일 (피드사이트 우선순위 아닌 것들)

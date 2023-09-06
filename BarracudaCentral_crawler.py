@@ -5,12 +5,13 @@ from tqdm import tqdm
 import json
 # import time
 
-
+# 검색 위치 url 및 privatekey 찾아오기.
 file_path="./teniron.json"
 with open(file_path,'r',encoding='utf-8') as file:
     data = json.load(file)
     url,private_key = data["BarracudaCentral"].values()
 
+# 크롤링할 ip 가져오기, 일시적 에러 + 서버 오류시 대응.
 ip_list_path="laBel_sample0001.txt"
 new = open(f'barracuda_result_{ip_list_path}','w')
 retry_list=[]

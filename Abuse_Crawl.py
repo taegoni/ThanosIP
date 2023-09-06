@@ -4,6 +4,10 @@
 import requests
 import json
 from variableFile import AbuseAPI
+import time
+from tqdm import tqdm
+import winsound as sd
+
 
 # ip list 파일 열고 output 저장할 변수 선언
 ip_file = open("laBel_sample0001.txt", 'r')
@@ -16,22 +20,21 @@ ip_line = ip_file.readlines()[15:]
 i = 0
 only_ip = []
 while i < len(ip_line) :
-    only_ip.append(ip_line[i].rstrip("\n"))
+    only_ip.append(ip_line[i].rstrip())
     i += 1
 
 # 정제된 ip 리스트 확인 출력
-print(only_ip)
+# print(only_ip)
 
 # while문으로 ip 한줄씩 반복 검색하기
-i = 0
-while i < len(only_ip) :
-
+t = 0
+for t in tqdm(range(len(only_ip)), desc='Processing', total=len(only_ip)):
     # Defining the api-endpoint
     url = 'https://api.abuseipdb.com/api/v2/check'
 
     querystring = {
         
-        'ipAddress': only_ip[i],
+        'ipAddress': only_ip[t],
         'maxAgeInDays': '90'
     }
 
@@ -51,10 +54,19 @@ while i < len(only_ip) :
     # elif문으로 error 결과값이면,
     # 서버 오류 (500번대)라면 error_ip txt 파일에 쓰기
     # 그 외 오류라면 ip 검색 재시도
-        # 몇 번 시도해도 안되면 error_ip txt 파일에 쓰기
+    # 몇 번 시도해도 안되면 error_ip txt 파일에 쓰기
 
-    i += 1
-
+    
 # ip list 파일 닫기
 ip_file.close()
 ip_output.close()
+
+# 비프음 발생 함수
+def beepsound() :
+    fr = 555
+    du = 1000
+    sd.Beep(fr, du)
+
+# 작업 완료시 비프음 발생
+beepsound()
+

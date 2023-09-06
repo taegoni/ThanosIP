@@ -11,7 +11,7 @@ import winsound as sd
 
 # ip list 파일 열고 output 저장할 변수 선언
 ip_file = open("laBel_sample0001.txt", 'r')
-ip_output = open("ip_output.txt", 'a')
+ip_output = open("ip_output.txt", 'w')
 
 # 16째 줄부터 (ip 부분만) 읽기
 ip_line = ip_file.readlines()[15:]

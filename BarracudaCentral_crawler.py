@@ -1,23 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-import json
-import time
 from tqdm import tqdm
+import json
+# import time
 
-def Selenium_crawl(i,u):
-    chrome_options = Options() 
-    chrome_options.add_experimental_option("detach", True) 
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.get(u)
-    driver.find_element(By.CSS_SELECTOR,"#ir_entry").send_keys(i)
-    driver.find_element(By.CSS_SELECTOR,'#lookup-reputation > div > div.yui-u.first > form > fieldset > div:nth-child(3) > input[type=submit]:nth-child(2)').click()
-    # 봇으로 인식되지 않도록?
-    time.sleep(0.5)
-    return new.write(driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p").text + "\n")
-    
-     
-     
 
 file_path="./teniron.json"
 with open(file_path,'r',encoding='utf-8') as file:
@@ -28,23 +15,53 @@ ip_list_path="laBel_sample0001.txt"
 new = open(f'barracuda_result_{ip_list_path}','w')
 retry_list=[]
 with open(ip_list_path,'r',encoding='utf-8') as ips:
+        chrome_options = Options()
+        chrome_options.add_argument("headless")
+        chrome_options.add_argument('log-level=3')
+        # chrome_options.add_experimental_option("detach", True) 
+        driver = webdriver.Chrome(options=chrome_options)
+        driver.get(url)
+        driver.implicitly_wait(10)
         for line in tqdm(ips.readlines(),desc='1차 크롤링'):
             try:
                 if line[0]=="#":
                         continue
                 else:
                     ip=line.strip()
-                    Selenium_crawl(ip,url)
+                    driver.find_element(By.CSS_SELECTOR,"#ir_entry").send_keys(ip)
+                    driver.find_element(By.CSS_SELECTOR,'#lookup-reputation > div > div.yui-u.first > form > fieldset > div:nth-last-child(1) > input[type=submit]:nth-child(2)').click()
+                    driver.find_element(By.CSS_SELECTOR,"#ir_entry").clear()
+                    new.write(driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p").text + "\n")
             except:
                 retry_list.append(ip)
         pending=[]
         for ret in tqdm(range(len(retry_list)),desc="재시도 1차"):
             try:
                 ip=retry_list[ret]
-                Selenium_crawl(ip,url)
+                driver.find_element(By.CSS_SELECTOR,"#ir_entry").send_keys(ip)
+                driver.find_element(By.CSS_SELECTOR,'#lookup-reputation > div > div.yui-u.first > form > fieldset > div:nth-last-child(1) > input[type=submit]:nth-child(2)').click()
+                new.write(driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p").text + "\n")
             except:
                  pending.append(ip)
-
+driver.quit()
 new.write(f"not working : {pending}"+"\n")
                      
 new.close()
+
+# ? 해결중인 issue
+# 크롬 창을 띄우지 않게 하려고 하면 뜨는 에러? 경고? 
+# Uncaught TypeError: Cannot read properties of null (reading 'select') 
+# 내지는
+# A parser-blocking, cross site (i.e. different eTLD+1) script, https://ssl.google-analytics.com/ga.js,
+# is invoked via document.write.
+# The network request for this script MAY be blocked by the browser in this or a future page load
+# due to poor network connectivity.
+# If blocked in this page load, it will be confirmed in a subsequent console message.
+# See https://www.chromestatus.com/feature/5718547946799104 for more details.
+# 이런 에러가 뜬다. 
+
+# ! loglevel을 3으로 올려 임시 해결 
+# INFO = 0, 
+# WARNING = 1, 
+# LOG_ERROR = 2, 
+# LOG_FATAL = 3.

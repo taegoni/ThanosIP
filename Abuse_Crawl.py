@@ -1,5 +1,5 @@
 # Abuse_Crawl.py
-# API 결과값 받아 txt 파일에 저장 성공 + 진행률 bar 표시 + 크롤링 완료시 비프음 발생
+# API 결과값 txt 파일에 저장 + 진행률 bar 표시 + 크롤링 완료시 비프음 발생
 
 import requests
 import json

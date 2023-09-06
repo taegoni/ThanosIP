@@ -13,6 +13,3 @@ try:
     driver.get(url)
 except:
     print("nope")
-
-while True:
-    pass

@@ -10,18 +10,18 @@
 # ! 하나의 string에서 자꾸 못 찾아내서 이런 방법으로 돌림..
 
 import re
+from tqdm import tqdm
+input_file_name='raw_list' # path = current folder, type it without file type
+# input_file_name ='laBel_sample0001' # test
 alpha_clear='[^0-9\.]'
 ip_get=re.compile('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$')
-test_file=open('./test_list.txt','r',encoding='utf-8')
-export_file=open('./regex_test.txt','w',encoding='utf-8')
-for line in test_file.readlines():
+import_file=open(f'./{input_file_name}.txt','r',encoding='utf-8')
+export_file=open(f'./{input_file_name}_ppd.txt','w',encoding='utf-8')
+for line in tqdm(import_file.readlines(),desc="진행률 : "):
     noalpha=re.sub(alpha_clear," ",line).split()
     for ip_cand in noalpha:
         matcher=ip_get.match(ip_cand)
-        print("no alpha:",noalpha)
-        print("matcher:",matcher)
         if matcher:
-            print('matched')
             export_file.write(matcher.group()+'\n')
-test_file.close()
+import_file.close()
 export_file.close()

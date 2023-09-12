@@ -1,20 +1,27 @@
 # ip파일을 생성하는 전처리기
+
 # xxx.xxx.xxx.xxx 형식을 정규식으로 찾아서 저장하도록 한다.
 # 문자열 사이에 있는것을 뽑아내기... 정규식....
-import re
-ip_get=re.compile('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/g')
+# ? 포트나 서브넷은 어떻게 잡아낼 것인지 생각해보기.
 
+# 1. 숫자와 점을 제외한 것들을 모두 제거하여 공백화 한다.
+# 2. 공백 기준 split
+# 3. 각각이 ipv4인지 체크하기 ipv4 정규식을 돌린다.
+# ! 하나의 string에서 자꾸 못 찾아내서 이런 방법으로 돌림..
+
+import re
+alpha_clear='[^0-9\.]'
+ip_get=re.compile('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$')
 test_file=open('./test_list.txt','r',encoding='utf-8')
-# export_file=open('./regex_test.txt','w',encoding='utf-8')
-answer1=[]
-answer2=[]
+export_file=open('./regex_test.txt','w',encoding='utf-8')
 for line in test_file.readlines():
-    # print(line)
-    if ip_get.match(line):
-        # export_file.write(ip_get.match(line).group()+'\n')
-        answer1.append(ip_get.findall(line))
-        answer2.append(ip_get.match(line).group())
-print(answer1)
-print(answer2)
+    noalpha=re.sub(alpha_clear," ",line).split()
+    for ip_cand in noalpha:
+        matcher=ip_get.match(ip_cand)
+        print("no alpha:",noalpha)
+        print("matcher:",matcher)
+        if matcher:
+            print('matched')
+            export_file.write(matcher.group()+'\n')
 test_file.close()
-# export_file.close()
+export_file.close()

@@ -1,8 +1,8 @@
 import requests
 import json
-import sys
 import winsound as sd
 from tqdm import tqdm
+import apikey
 
 file = open("laBel_sample0001.txt",'r')
 
@@ -12,12 +12,14 @@ criminalip_data = open('criminalip_data.txt','w')
 
 
 try :
+  
   for i in tqdm((line),desc="progress") : 
+    i = i.strip()
     if '#' not in i :
       url = "https://api.criminalip.io/v1/ip/data?ip={}".format(i)
       payload={}
       headers = {
-        "x-api-key": "tnlZ7BUgf7GjqOBlbCA68i5ZF7J30q2Rn2NDygbkX1m87RzCl0x6u4R41hYL"
+        "x-api-key": "{}".format(apikey.criminalip_apikey)
       }
 
       response = requests.request("GET", url, headers=headers, data=payload)

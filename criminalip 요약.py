@@ -1,6 +1,6 @@
 import requests
 import json
-import sys
+import apikey
 
 file = open("laBel_sample0001.txt",'r')
 
@@ -9,12 +9,13 @@ line = file.readlines()
 criminalip_summary = open('criminalip_summary.txt','w')
 try :
   for i in line :
+    i = i.strip()
     if '#' not in i :
-      url = "https://api.criminalip.io/v1/ip/vpn?ip={}".format(i)
+      url = "https://api.criminalip.io/v1/feature/ip/privacy-threat?ip={}".format(i)
 
       payload={}
       headers = {
-        "x-api-key": "tnlZ7BUgf7GjqOBlbCA68i5ZF7J30q2Rn2NDygbkX1m87RzCl0x6u4R41hYL"
+        "x-api-key": "{}".format(apikey.criminalip_apikey)
       }
 
       response = requests.request("GET", url, headers=headers, data=payload)

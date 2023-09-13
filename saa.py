@@ -15,5 +15,5 @@ response = requests.get(url, headers=headers, data=payload)
 data = response.json()
 
 formatted_data = json.dumps(data, indent=3)
-print(response.text)
+print(formatted_data)
 

@@ -1,6 +1,6 @@
 import json
 import requests
-file_path="./teniron.json"
+file_path="./etc/teniron.json"
 with open(file_path,'r',encoding='utf-8') as file:
         data =json.load(file)
         url,private_key = data["Ailabs"].values()

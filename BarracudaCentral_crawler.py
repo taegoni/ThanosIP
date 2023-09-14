@@ -6,15 +6,17 @@ import json
 # import time
 
 # 검색 위치 url 및 privatekey 찾아오기.
-file_path="./teniron.json"
+file_path="./etc/teniron.json"
 with open(file_path,'r',encoding='utf-8') as file:
     data = json.load(file)
     url,private_key = data["BarracudaCentral"].values()
 
 # 크롤링할 ip 가져오기, 일시적 에러 + 서버 오류시 대응.
-ip_list_path="laBel_sample0001.txt"
-new = open(f'barracuda_result_{ip_list_path}','w')
+ip_list_name="laBel_sample0001.txt"
+ip_list_path=f'./data/resources/{ip_list_name}'
+new = open(f'./data/responses/barracuda_result_{ip_list_name}','w')
 retry_list=[]
+error_log=[]
 with open(ip_list_path,'r',encoding='utf-8') as ips:
         chrome_options = Options()
         chrome_options.add_argument("headless")
@@ -24,17 +26,16 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
         driver.get(url)
         driver.implicitly_wait(10)
         for line in tqdm(ips.readlines(),desc='1차 크롤링'):
+            ip=line.strip()
             try:
-                if line[0]=="#":
-                        continue
-                else:
-                    ip=line.strip()
-                    driver.find_element(By.CSS_SELECTOR,"#ir_entry").send_keys(ip)
-                    driver.find_element(By.CSS_SELECTOR,'#lookup-reputation > div > div.yui-u.first > form > fieldset > div:nth-last-child(1) > input[type=submit]:nth-child(2)').click()
-                    driver.find_element(By.CSS_SELECTOR,"#ir_entry").clear()
-                    new.write(driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p").text + "\n")
-            except:
+                driver.find_element(By.CSS_SELECTOR,"#ir_entry").send_keys(ip)
+                driver.find_element(By.CSS_SELECTOR,'#lookup-reputation > div > div.yui-u.first > form > fieldset > div:nth-last-child(1) > input[type=submit]:nth-child(2)').click()
+                driver.find_element(By.CSS_SELECTOR,"#ir_entry").clear()
+                new.write(driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p").text + "\n")
+            except Exception as e:
                 retry_list.append(ip)
+                error_log.append(f"{ip}:{e}")
+
         pending=[]
         for ret in tqdm(range(len(retry_list)),desc="재시도 1차"):
             try:
@@ -44,9 +45,11 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
                 new.write(driver.find_element(By.CSS_SELECTOR,"#lookup-reputation > div > div.yui-u.first > form > fieldset > p").text + "\n")
             except:
                  pending.append(ip)
+                 error_log.append(f"{ip}:{e}")
+
 driver.quit()
 new.write(f"not working : {pending}"+"\n")
-                     
+new.write(f"internal error_log : {error_log}"+"\n")
 new.close()
 
 # ? 해결중인 issue

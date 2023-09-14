@@ -3,13 +3,14 @@ import requests
 from tqdm import tqdm
 
 # url 과 privatekey 가져오기
-file_path="./teniron.json"
+file_path="./etc/teniron.json"
 with open(file_path,'r',encoding='utf-8') as file:
         data =json.load(file)
         url,private_key = data["Ipqualityscore"].values()
 
 # 샘플 ip 파일.
-ip_list_path="laBel_sample0001.txt"
+ip_list_name="laBel_sample0001.txt"
+ip_list_path=f'./data/resources/{ip_list_name}'
 
 # IPQS의 검색 옵션 초기값 설정
 strictness="0"
@@ -22,9 +23,9 @@ option = "&".join([f'strictness={strictness}',f'allow_public_access_points={allo
 
 # 에러시 처리를 위한 재 시도 목록.
 retry_list=[]
-
+error_log=[]
 # IPQS 결과 파일 기록 시작.
-new=open(f'IPQS_result_{ip_list_path}','w')
+new=open(f'IPQS_result_{ip_list_name}','w')
 
 #크롤링 시작.
 with open(ip_list_path,'r',encoding='utf-8') as ips:
@@ -38,8 +39,10 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
                                 res_raw = requests.get(query)
                                 res_json = json.loads(res_raw.text)
                                 new.write(res_raw.text+"\n")
-                        except:
+                        except Exception as e:
                                 retry_list.append(ip)
+                                error_log.append(e)
+
         # 에러가 났던 ip들 재시도.
         pending=[]
         for ret in tqdm(range(len(retry_list)),desc="재시도 1차"):
@@ -48,8 +51,10 @@ with open(ip_list_path,'r',encoding='utf-8') as ips:
                         res_raw = requests.get(query)
                         res_json = json.loads(res_raw.text)
                         new.write(res_raw.text+"\n")
-                except:
+                except Exception as e:
                         pending.append(ip)
+                        error_log.append(e)
         # 에러이유별 분류.
         new.write(f"http 500+ : {pending}"+"\n")
+        new.write(f"internal error_log : {error_log}"+"\n")
 new.close()

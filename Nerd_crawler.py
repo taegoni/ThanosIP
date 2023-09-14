@@ -7,8 +7,8 @@ with open(file_path,'r',encoding='utf-8') as file:
         data =json.load(file)
         url,private_key = data["Nerd"].values()
 
-ip_list_name="laBel_sample0001.txt"
-ip_list_path=f'./data/resources/{ip_list_name}'
+ip_list_name="laBel_sample0001_ppd.txt"
+ip_list_path=f'./data/preprocessed/{ip_list_name}'
 # ip_list_path="banlist.txt"
 
 # 옵션에 따라 full rep fmt 등등으로 나눠볼 예정.            
@@ -16,7 +16,7 @@ option=["full","rep","fmt"]
 clean_list=[]
 retry_list=[]
 error_log=[]
-new = open(f'NERD_result_{ip_list_name}','w')
+new = open(f'./data/responses/NERD_result_{ip_list_name}','w')
 with open(ip_list_path,'r',encoding='utf-8') as ips:
         for line in tqdm(ips.readlines(),desc='1차 크롤링'):
                 if line[0]=="#":

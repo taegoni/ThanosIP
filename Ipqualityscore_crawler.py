@@ -9,8 +9,8 @@ with open(file_path,'r',encoding='utf-8') as file:
         url,private_key = data["Ipqualityscore"].values()
 
 # 샘플 ip 파일.
-ip_list_name="laBel_sample0001.txt"
-ip_list_path=f'./data/resources/{ip_list_name}'
+ip_list_name="laBel_sample0001_ppd.txt"
+ip_list_path=f'./data/preprocessed/{ip_list_name}'
 
 # IPQS의 검색 옵션 초기값 설정
 strictness="0"
@@ -25,7 +25,7 @@ option = "&".join([f'strictness={strictness}',f'allow_public_access_points={allo
 retry_list=[]
 error_log=[]
 # IPQS 결과 파일 기록 시작.
-new=open(f'IPQS_result_{ip_list_name}','w')
+new=open(f'./data/responses/IPQS_result_{ip_list_name}','w')
 
 #크롤링 시작.
 with open(ip_list_path,'r',encoding='utf-8') as ips:

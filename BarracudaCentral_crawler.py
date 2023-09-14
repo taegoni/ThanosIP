@@ -12,8 +12,8 @@ with open(file_path,'r',encoding='utf-8') as file:
     url,private_key = data["BarracudaCentral"].values()
 
 # 크롤링할 ip 가져오기, 일시적 에러 + 서버 오류시 대응.
-ip_list_name="laBel_sample0001.txt"
-ip_list_path=f'./data/resources/{ip_list_name}'
+ip_list_name="laBel_sample0001_ppd.txt"
+ip_list_path=f'./data/preprocessed/{ip_list_name}'
 new = open(f'./data/responses/barracuda_result_{ip_list_name}','w')
 retry_list=[]
 error_log=[]

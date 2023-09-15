@@ -9,6 +9,8 @@ from tqdm import tqdm
 import winsound as sd
 
 
+# mariaDB 연결중..
+
 # ip list 파일 열고 output 저장할 변수 선언
 ip_file = open("laBel_sample0001.txt", 'r')
 ip_output = open("ip_output.txt", 'w')

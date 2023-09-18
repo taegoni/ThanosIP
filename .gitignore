@@ -12,6 +12,8 @@ package/
 *.ipynb
 *try.py
 
+*.pem
+
 # 임시 숨김 파일 (피드사이트 우선순위 아닌 것들)
 Bright*.py
 Joe*.py

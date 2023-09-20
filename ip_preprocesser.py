@@ -14,11 +14,12 @@
 
 import re
 from tqdm import tqdm
-input_file_name='raw_list.txt' # path = current folder, type it without file type
+# input_file_name='raw_list.txt' # path = current folder, type it without file type
+input_file_name='firehol_level1.netset'
 input_file_path=f'./data/resources/{input_file_name}'
 # input_file_name ='laBel_sample0001' # test
-alpha_clear='[^0-9\.]'
-ip_get=re.compile('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$')
+alpha_clear='[^0-9\./]'
+ip_get=re.compile('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/?([0-9]|[1-2][0-9]|3[0-2])$')
 import_file=open(input_file_path,'r',encoding='utf-8')
 export_file=open(f'./data/preprocessed/{input_file_name}_ppd.txt','w',encoding='utf-8')
 for line in tqdm(import_file.readlines(),desc="진행률 : "):
@@ -26,6 +27,7 @@ for line in tqdm(import_file.readlines(),desc="진행률 : "):
     for ip_cand in noalpha:
         matcher=ip_get.match(ip_cand)
         if matcher:
+            print(matcher)
             export_file.write(matcher.group()+'\n')
 import_file.close()
 export_file.close()

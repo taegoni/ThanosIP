@@ -32,7 +32,7 @@
 import dbModule
 
 table_name="test_table"
-insert_data='"123.123.123.123",1'
+insert_data='"123.123.123.123",1,NULL,"KR","never.comx",33'
 db_class = dbModule.Database()
 sql = f"INSERT INTO {table_name} VALUES({insert_data})"
 db_class.execute(sql)

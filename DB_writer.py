@@ -1,12 +1,13 @@
 import pyodbc
 import pandas as pd
+import json
 
 dbkeys=open("./etc/teniron.json",'r',encoding='utf-8')
-
-SERVER = dbkeys["server"]
-DATABASE= dbkeys["database"]
+db_meta=json.load(dbkeys)
+SERVER = db_meta["MariaDB"]["server"]
+DATABASE= db_meta["MariaDB"]["database"]
 USERNAME = 'team'
-PASSWORD = dbkeys["password"]
+PASSWORD = db_meta["MariaDB"]["password"]
 
 connectionString = f'DRIVER={{SQL Server}};SERVER={SERVER};DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD};trusted_connection="yes"'
 

@@ -10,7 +10,7 @@ file = open("laBel_sample0001.txt",'r')
 
 line = file.readlines()
 
-sys.VirusTatal = open('VirusTatal.txt','w')
+sys.VirusTotal = open('VirusTotal.txt','w')
 
 
 try :  
@@ -23,16 +23,16 @@ try :
             result = response.json()
 
             if result['data']['attributes']['last_analysis_stats']['harmless'] > 0 and result['data']['attributes']['last_analysis_stats']['malicious'] == 0 :
-                sys.VirusTatal.write('\"harmless\" : {} '.format(response.text))
+                sys.VirusTotal.write('\"harmless\" : {} '.format(response.text))
                
             elif result['data']['attributes']['last_analysis_stats']['malicious'] > 0 :
-                sys.VirusTatal.write('\"malicious\" : {} '.format(response.text))
+                sys.VirusTotal.write('\"malicious\" : {} '.format(response.text))
 
             elif result['data']['attributes']['last_analysis_stats']['undetected'] == result['data']['attributes']['last_analysis_stats']['harmless'] + result['data']['attributes']['last_analysis_stats']['malicious'] + result['data']['attributes']['last_analysis_stats']['suspicious'] + result['data']['attributes']['last_analysis_stats']['undetected'] :
-                sys.VirusTatal.write('\"undetected\" : {} '.format(response.text))
+                sys.VirusTotal.write('\"undetected\" : {} '.format(response.text))
 except :
     print("Error")
-sys.VirusTatal.close()
+sys.VirusTotal.close()
 
 file.close()
 

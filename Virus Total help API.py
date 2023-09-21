@@ -17,3 +17,7 @@ for x in result['scans'] :
         print("{0:22} : {1}".format(x,result['scans'][x]['result']))
     
 print("{0} engines detected this file".format(det))
+
+# for i in result['data']['attributes']['last_analysis_results'] :
+#     print("{:<30} : {}".format(i,result['data']['attributes']['last_analysis_results'][i]['category']))
+      

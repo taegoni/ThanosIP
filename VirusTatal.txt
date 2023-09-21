@@ -10,7 +10,7 @@
             "last_analysis_stats": {
                 "harmless": 64,
                 "malicious": 1,
-                "suspicious": 0,
+                "suspicious": 0,    
                 "undetected": 24,
                 "timeout": 0
             },

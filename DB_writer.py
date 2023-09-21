@@ -1,20 +1,30 @@
-import pyodbc
-import pandas as pd
+import mariadb
 import json
+import sys
 
 dbkeys=open("./etc/teniron.json",'r',encoding='utf-8')
 db_meta=json.load(dbkeys)
-SERVER = db_meta["MariaDB"]["server"]
+
+SERVER,PORT = db_meta["MariaDB"]["server"].split("/")
 DATABASE= db_meta["MariaDB"]["database"]
 USERNAME = 'team'
 PASSWORD = db_meta["MariaDB"]["password"]
 
-connectionString = f'DRIVER={{SQL Server}};SERVER={SERVER};DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD};trusted_connection="yes"'
+try:
+    conn = mariadb.connect(user=USERNAME,password=PASSWORD,host=SERVER,port=PORT,database=DATABASE)
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB Platform: {e}")
+    sys.exit(1)
 
-conn=pyodbc.connect(connectionString)
-cursor = conn.cursor()
+cur = conn.cursor()
+query="SELECT * FROM test_table"
 
-query= "SELECT * FROM test_table"
+cur.execute(query)
 
-df_existing_tables = pd.read_sql(query,conn)
-df_existing_tables
+rows = cur.fetchall()
+print(rows,'\n')
+
+conn.commit()
+
+cur.close()
+conn.close()

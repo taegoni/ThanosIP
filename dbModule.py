@@ -5,7 +5,6 @@ dbkeys=open("./etc/teniron.json",'r',encoding='utf-8')
 db_meta=json.load(dbkeys)
 
 SERVER,PORT = db_meta["MariaDB"]["server"].split("/")
-# DATABASE= db_meta["MariaDB"]["database"]
 USERNAME = 'team'
 PASSWORD = db_meta["MariaDB"]["password"]
 

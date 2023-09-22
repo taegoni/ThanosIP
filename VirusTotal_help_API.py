@@ -1,7 +1,8 @@
 import requests
+import apikey
 
 v_url = 'https://www.virustotal.com/vtapi/v2/file/report'
-params = {'apikey' : 'f50fe40dd128c111a0def3c9c1276c804d1ec03ee8f261b062de8540ff39b915' , 'resource' : '31697d421c4b1995cdf0a2fa0bf6fe6d'}
+params = {'apikey' : '{}'.format(apikey.virustotal_apikey) , 'resource' : '31697d421c4b1995cdf0a2fa0bf6fe6d'}
 
 response = requests.get(v_url, params=params)
 

@@ -5,18 +5,20 @@ from tqdm import tqdm
 import apikey
 
 
-
+# ip list 파일 열기
 file = open("laBel_sample0001.txt",'r')
 
+# 변수에 한줄 씩 저장
 line = file.readlines()
 
+# 파일저장 변수 생성
 sys.VirusTotal = open('VirusTotal.txt','w')
 
 
 try :  
     for i in tqdm((line),desc="progress") : 
         i = i.strip()
-        if '#' not in i :
+        if '#' not in i  :
             url = "https://www.virustotal.com/api/v3/ip_addresses/{}".format(i)
             headers = {"accept": "application/json", "x-apikey" : "{}".format(apikey.virustotal_apikey)}
             response = requests.get(url, headers=headers)

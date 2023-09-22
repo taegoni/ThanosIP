@@ -14,7 +14,7 @@ line = file.readlines()
 # 파일저장 변수 생성
 sys.VirusTotal = open('VirusTotal.txt','w')
 
-
+# 반복
 try :  
     for i in tqdm((line),desc="progress") : 
         i = i.strip()

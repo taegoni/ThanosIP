@@ -8,7 +8,7 @@ from variableFile import SERVER, DBPORT, teampw
 # USERNAME = 'team'
 # PASSWORD = db_meta["teampw"]
 
-DBSERVER = SERVER
+DBSERVER = 'localhost'
 PORT = DBPORT
 USERNAME = 'team'
 PASSWORD = teampw

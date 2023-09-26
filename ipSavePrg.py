@@ -27,9 +27,6 @@ while i < len(fileList):
         ipList = f.readlines()
         if not ipList : break
 
-        # ip 리스트 파일 제목 참고하여 출처 파악
-        ip_from = os.path.basename(fileList[i])
-
         # while문으로 ip 한줄씩 읽으면서 테이블 컬럼 양식에 맞게 저장
             # ip, 악성여부 True/False, ip 파일 출처(근거), DB에 저장되는 시간
             # ipList의 ip 한줄씩 가져와서 행 조합 후 DB에 저장
@@ -37,7 +34,9 @@ while i < len(fileList):
         while p < len(ipList):
             ip = ipList[p]
             reputation_score = 1
-            # ip_from = fileList[i]
+            # ip 리스트 파일 제목 참고하여 출처 파악
+            ip_from = os.path.basename(fileList[i])
+            #ip_from = "NULL"
             update_time = datetime.datetime.now()
             insert_data = f'"{ip}",{reputation_score},{ip_from},"{update_time}"'
             sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만

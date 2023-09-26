@@ -45,6 +45,7 @@ while i < len(fileList):
             db_class.execute(sql) # db에 sql문 작성
             db_class.commit() #sql문 실행
         
+            # while문 p값 증가
             p += 1
         
         # 안쪽 while문 i값 증가

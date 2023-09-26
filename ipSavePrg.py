@@ -18,7 +18,7 @@ print(fileList)
 
 # ipList 폴더의 파일들 하나씩 읽음
 i = 0
-ip_from = fileList[i]
+ip_from = '"'+fileList[i]+'"'
 while i < len(fileList):
     # (정규화된) ip 리스트 파일 오픈
     f = open("./ipList/"+fileList[i], "r")

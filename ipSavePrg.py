@@ -41,7 +41,7 @@ while i < len(fileList):
             update_time=datetime.datetime.now()
             insert_data='"{ip}",{reputation_score},{ip_from},"{update_time}"'
             sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만
-            sql = "SELECT * from test_table"
+            #sql = "SELECT * from "+table_name
             db_class.execute(sql) # db에 sql문 작성
             db_class.commit() #sql문 실행
         

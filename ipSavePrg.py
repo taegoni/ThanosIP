@@ -37,7 +37,7 @@ while i < len(fileList):
         while p < len(ipList):
             ip = ipList[p]
             reputation_score = 1
-            ip_from = "NULL"
+            # ip_from = "NULL"
             update_time = datetime.datetime.now()
             insert_data = f'"{ip}",{reputation_score},{ip_from},"{update_time}"'
             sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만

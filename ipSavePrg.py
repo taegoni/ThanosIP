@@ -16,7 +16,7 @@ db_class = dbModule.Database(DB_name) # db 인스턴스
 fileList = os.listdir("./ipList/")
 print(fileList)
 
-# ipList 폴더의 파일들 하나씩 실행
+# ipList 폴더의 파일들 하나씩 읽음
 i = 0
 while i < len(fileList):
     # (정규화된) ip 리스트 파일 오픈
@@ -33,9 +33,9 @@ while i < len(fileList):
         p = 0
         while p < len(ipList):
             ip = ipList[p]
-            reputation_score = 1
+            reputation_score = "True"
             # ip 리스트 파일 제목 참고하여 출처 파악
-            ip_from = os.path.basename(fileList[i])
+            ip_from = fileList[i]
             #ip_from = "NULL"
             update_time = datetime.datetime.now()
             insert_data = f'"{ip}",{reputation_score},{ip_from},"{update_time}"'

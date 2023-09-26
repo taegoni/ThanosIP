@@ -1,16 +1,21 @@
 import pymysql
-import json
+from variableFile import SERVER, DBPORT, teampw
 
-dbkeys=open("./etc/teniron.json",'r',encoding='utf-8')
-db_meta=json.load(dbkeys)
+# dbkeys=open("./variableFile.py",'r',encoding='utf-8')
+# db_meta=variableFile.load(dbkeys)
 
-SERVER,PORT = db_meta["MariaDB"]["server"].split("/")
+# SERVER,PORT = db_meta["SERVER"]["DBPORT"].split("/")
+# USERNAME = 'team'
+# PASSWORD = db_meta["teampw"]
+
+DBSERVER = SERVER
+PORT = DBPORT
 USERNAME = 'team'
-PASSWORD = db_meta["MariaDB"]["password"]
+PASSWORD = teampw
 
 class Database():
     def __init__(self,DATABASE):
-        self.db = pymysql.connect(host=SERVER,
+        self.db = pymysql.connect(host=DBSERVER,
                                   user=USERNAME,
                                   password=PASSWORD,
                                   db=DATABASE,

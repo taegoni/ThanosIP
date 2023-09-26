@@ -20,6 +20,7 @@ print(fileList)
 i = 0
 while i < len(fileList):
     # (정규화된) ip 리스트 파일 오픈
+    file_name = (fileList[i])
     f = open("./ipList/"+fileList[i], "r")
     print(fileList[i])
 
@@ -35,7 +36,8 @@ while i < len(fileList):
             ip = ipList[p]
             reputation_score = "True"
             # ip 리스트 파일 제목 참고하여 출처 파악
-            ip_from = fileList[i]
+            ip_from = file_name
+            # ip_from = fileList[i]
             #ip_from = "NULL"
             update_time = datetime.datetime.now()
             insert_data = f'"{ip}",{reputation_score},{ip_from},"{update_time}"'

@@ -35,11 +35,11 @@ while i < len(fileList):
             # ipList의 ip 한줄씩 가져와서 행 조합 후 DB에 저장
         p = 0
         while p < len(ipList):
-            ipList[p]=1
-            reputation_score=1
-            ip_from="NULL"
-            update_time=datetime.datetime.now()
-            insert_data='"{ip}",{reputation_score},{ip_from},"{update_time}"'
+            ip = ipList[p]
+            reputation_score = 1
+            ip_from = "NULL"
+            update_time = datetime.datetime.now()
+            insert_data = f'"{ip}",{reputation_score},{ip_from},"{update_time}"'
             sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만
             #sql = "SELECT * from "+table_name
             db_class.execute(sql) # db에 sql문 작성

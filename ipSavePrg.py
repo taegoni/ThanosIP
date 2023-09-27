@@ -5,7 +5,6 @@
 import os
 import dbModule
 import datetime
-import pygame
 
 
 # MariaDB 연결
@@ -19,6 +18,7 @@ print(fileList)
 
 # ipList 폴더의 파일들 하나씩 읽음
 i = 0
+# ip 리스트 파일 제목 참고하여 출처 파악
 ip_from = '"'+fileList[i]+'"'
 while i < len(fileList):
     # (정규화된) ip 리스트 파일 오픈
@@ -36,13 +36,21 @@ while i < len(fileList):
         while p < len(ipList):
             ip = ipList[p]
             reputation_score = "True"
-            # ip 리스트 파일 제목 참고하여 출처 파악
-            # ip_from = fileList[i]
-            #ip_from = "NULL"
             update_time = datetime.datetime.now()
-            insert_data = f'"{ip}",{reputation_score},{ip_from},"{update_time}"'
-            sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만
-            #sql = "SELECT * from "+table_name
+            insert_data = f'"{ip}","{reputation_score}","{ip_from}","{update_time}"'
+                
+            searchSql = f'SELECT "ip" FROM "{table_name}"'
+            with db_class:
+                with db_class.cursor() as cur:
+                    cur.excute(searchSql)
+                    result = cur.fetchall()
+                    # ip가 존재하지 않으면 DB에 입력 INSERT
+                    if ip in result:
+                        sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만
+                    # ip가 이미 존재한다면 뒤의 3데이터만 덮어쓰기 UPDATE
+                    elif ip not in result:
+                        sql = f"UPDATE {table_name} SET reputation_score = {reputation_score}, ip_from = {ip_from}, update_time = {update_time}"
+            # sql = "SELECT * from "+table_name
             db_class.execute(sql) # db에 sql문 작성
             db_class.commit() #sql문 실행
         
@@ -61,13 +69,3 @@ f.close()
 
 # MariaDB 연결 종료
 
-
-# 비프음 발생 함수
-def beepsound() :
-    pygame.init()
-    pygame.mixer.init()
-    sound = pygame.mixer.Sound("MP_Checkout Scanner Beep.mp3")
-    sound.play()
-
-# 작업 완료시 비프음 발생
-beepsound()

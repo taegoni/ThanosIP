@@ -1,13 +1,13 @@
 import requests
 from datetime import datetime
 
-url = 'https://raw.githubusercontent.com/monitorapp-aicc/feed/main/attacker_ip.txt'
+url = 'https://rules.emergingthreats.net/fwrules/emerging-Block-IPs.txt'
 
 response = requests.get(url)
 
 if response.status_code == 200:  # '200'은 HTTP 상태 코드 중 하나로, 'OK'를 나타냄
     current_datetime = datetime.now().strftime('%y%m%d_%H%M%S') # 현재 날짜와 시간을 포맷팅하여 파일 이름에 넣기
-    filename = f'monitorapp_attacker_ip_{current_datetime}.txt' 
+    filename = f'./feedsite_attakcerIp_list/emergingthreats_attackerip_{current_datetime}.txt' 
     with open(filename, 'wb') as file:
         file.write(response.content)
         print(f"파일이 성공적으로 저장되었습니다.")

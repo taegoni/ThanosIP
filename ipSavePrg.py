@@ -42,7 +42,7 @@ while i < len(fileList):
             searchSql = f'SELECT ip FROM {table_name}'
             db_class.execute(searchSql)
             print("중간확인")
-            result = db_class.fetchall()
+            result = list(db_class.fetchall())
             print(result)
             # ip가 존재하지 않으면 DB에 입력 INSERT
             if ip not in result:

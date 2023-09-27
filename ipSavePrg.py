@@ -43,6 +43,7 @@ while i < len(fileList):
             db_class.execute(searchSql)
             print("중간확인")
             result = db_class.fetchall()
+            print(result)
             # ip가 존재하지 않으면 DB에 입력 INSERT
             if ip in result:
                 sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만

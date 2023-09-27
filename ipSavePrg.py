@@ -45,15 +45,15 @@ while i < len(fileList):
             result = db_class.fetchall()
             print(result)
             # ip가 존재하지 않으면 DB에 입력 INSERT
-            if result:
-                if ip in result:
-                    sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만
-                # ip가 이미 존재한다면 뒤의 3데이터만 덮어쓰기 UPDATE
-                elif ip not in result:
-                    sql = f"UPDATE {table_name} SET reputation_score = {reputation_score}, ip_from = {ip_from}, update_time = {update_time}"
-            # sql = "SELECT * from "+table_name
-                db_class.execute(sql) # db에 sql문 작성
-                db_class.commit() #sql문 실행
+            if ip not in result:
+                sql = f"UPDATE {table_name} SET reputation_score = {reputation_score}, ip_from = {ip_from}, update_time = {update_time}"
+        # sql = "SELECT * from "+table_name
+            elif ip in result:
+                sql = f"INSERT INTO {table_name} VALUES({insert_data})" # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만
+            # ip가 이미 존재한다면 뒤의 3데이터만 덮어쓰기 UPDATE
+            
+            db_class.execute(sql) # db에 sql문 작성
+            db_class.commit() #sql문 실행
         
             # while문 p값 증가
             p += 1

@@ -37,3 +37,6 @@ class Database():
  
     def commit(self):
         self.db.commit()
+
+    def fetchall(self):
+        self.cursor.fetchall()

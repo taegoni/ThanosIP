@@ -40,7 +40,7 @@ while i < len(fileList):
             insert_data = f'"{ip}","{reputation_score}","{ip_from}","{update_time}"'
                 
             searchSql = f'SELECT "ip" FROM "{table_name}"'
-            db_class.excute(searchSql)
+            db_class.execute(searchSql)
             result = db_class.commit()
             # ip가 존재하지 않으면 DB에 입력 INSERT
             if ip in result:

@@ -45,11 +45,11 @@ while i < len(fileList):
             result = db_class.fetchall()
             print(result)
 
-            if result is None:
+            if result == None:
                 # ip가 존재하지 않으면 DB에 입력 INSERT
                 sql = f'INSERT INTO {table_name} VALUES({insert_data})' # SQL 쿼리문 => select,insert 모두 가능한데 지금은 입력만
             else:
-                if ip in result:
+                if ip == result[0]:
                     # ip가 이미 존재한다면 뒤의 3데이터만 덮어쓰기 UPDATE
                     sql = f'UPDATE {table_name} SET reputation_score = {reputation_score}, ip_from = {ip_from}, update_time = {update_time}'
                 else:

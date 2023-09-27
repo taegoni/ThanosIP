@@ -5,6 +5,7 @@
 import os
 import dbModule
 import datetime
+import pygame
 
 
 # MariaDB 연결
@@ -60,3 +61,13 @@ f.close()
 
 # MariaDB 연결 종료
 
+
+# 비프음 발생 함수
+def beepsound() :
+    pygame.init()
+    pygame.mixer.init()
+    sound = pygame.mixer.Sound("MP_Checkout Scanner Beep.mp3")
+    sound.play()
+
+# 작업 완료시 비프음 발생
+beepsound()

@@ -10,11 +10,13 @@ from tqdm import tqdm
 import sys, os
 sys.path.append('/home/teamlab/ThanosIP/Crawler/etc/')
 from variableFile import AbuseAPI
+
+
 # mariaDB 연결중..
 
 # ip list 파일 열고 output 저장할 변수 선언
-ip_file = open("laBel_sample0001.txt", 'r')
-ip_output = open("ip_output.txt", 'w')
+ip_file = open("/home/teamlab/ThanosIP/Crawler/data/laBel_sample0001.txt", 'r')
+ip_output = open("./ip_output.txt", 'w')
 
 # 16째 줄부터 (ip 부분만) 읽기
 ip_line = ip_file.readlines()[15:]

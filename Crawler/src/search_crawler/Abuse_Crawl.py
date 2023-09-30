@@ -3,12 +3,13 @@
 
 import requests
 import json
-from variableFile import AbuseAPI
 import time
 from tqdm import tqdm
-import winsound as sd
+# import winsound as sd
 
-
+import sys, os
+sys.path.append('/home/teamlab/ThanosIP/Crawler/etc/')
+from variableFile import AbuseAPI
 # mariaDB 연결중..
 
 # ip list 파일 열고 output 저장할 변수 선언
@@ -63,12 +64,12 @@ for t in tqdm(range(len(only_ip)), desc='Processing', total=len(only_ip)):
 ip_file.close()
 ip_output.close()
 
-# 비프음 발생 함수
-def beepsound() :
-    fr = 555
-    du = 1000
-    sd.Beep(fr, du)
+# # 비프음 발생 함수
+# def beepsound() :
+#     fr = 555
+#     du = 1000
+#     sd.Beep(fr, du)
 
-# 작업 완료시 비프음 발생
-beepsound()
+# # 작업 완료시 비프음 발생
+# beepsound()
 
